@@ -1,0 +1,17 @@
+<div class="main-content">
+  <div class="section-content section-content-p30">
+
+    <h3>You can search the question by their author:</h3>
+
+    <input  #title class="au-input au-input-xl" type="text"
+            placeholder="Enter the user's name ..."
+            (keyup.enter)="doUserSearch(title.value)" />
+
+    <button (click)="doUserSearch(title.value)"
+            class="au-btn-submit" type="submit">
+      Search
+    </button>
+
+  </div>
+</div>
+

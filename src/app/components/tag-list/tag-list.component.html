@@ -1,0 +1,32 @@
+<div class="main-content">
+  <div class="section-content section-content-p30">
+
+    <h2>Tags</h2>
+    <h3>A tag is a keyword or label that categorizes your question with other,
+      similar questions. Using the right tags makes it easier for others to
+      find and answer your question.</h3>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div>
+          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
+          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
+          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
+          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
+          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
+          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
+          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
+          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
+
+        </div>
+
+        <div *ngFor="let tempTag of tags">
+
+            <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">{{tempTag.title}}</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

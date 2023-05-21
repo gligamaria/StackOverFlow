@@ -1,0 +1,26 @@
+<div class="main-content">
+
+    <form>
+      <div>
+        <mat-form-field style="width: 500px">
+          <mat-label>Question Title</mat-label>
+          <input matInput placeholder="Cum se va numi corgi-ul tau?">
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field style="width: 500px">
+          <mat-label>Question Description</mat-label>
+          <textarea matInput></textarea>
+        </mat-form-field>
+      </div>
+    </form>
+
+    <app-tag-selection></app-tag-selection>
+
+  <input type="file" class="file-input"
+         (change)="onFileSelected($event)">
+
+  <a routerLink="/questions" class="btn btn-primary" style="margin-bottom: 15px">Ask question</a>
+
+</div>
