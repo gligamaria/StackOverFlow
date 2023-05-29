@@ -29,6 +29,7 @@ const routes: Routes= [
   {path: 'questions/:id', component: QuestionDetailsComponent},
   {path: 'questions/user/:user', component: QuestionListComponent},
   {path: 'search/:keyword', component: QuestionListComponent},
+  {path: 'questions/tag/:tag', component: QuestionListComponent},
   {path: 'questions', component: QuestionListComponent},
   {path: 'users', component: UserFilterComponent},
   {path: 'new/question', component: NewQuestionComponent},

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import {Observable} from "rxjs";
-import { map } from "rxjs/operators";
 import {Answer} from "../common/answer";
 
 @Injectable({
@@ -9,21 +8,30 @@ import {Answer} from "../common/answer";
 })
 export class AnswerService {
 
-  private url = 'http://localhost:8080/api/answers';
+  private url = 'http://localhost:8080/answers';
 
   constructor(private httpClient: HttpClient) {
   }
 
-  getAnswerList(): Observable<Answer[]> {
-    return this.httpClient.get<GetResponse>(this.url).pipe(
-      map(response => response._embedded.answers)
-    );
+  getAnswerList(questionId: number): Observable<Answer[]> {
+    const questionUrl = `${this.url}/getByQuestionId/${questionId}`;
+    return this.httpClient.get<Answer[]>(questionUrl)
   }
-}
 
-interface GetResponse {
-  //unwrap the spring data REST
-  _embedded: {
-    answers: Answer[];
+  getAnswerByID(answerId: number): Observable<Answer> {
+    const answerUrl = `${this.url}/getById/${answerId}`;
+    return this.httpClient.get<Answer>(answerUrl)
+  }
+
+  deleteAnswer(answerId: number): Observable<any> {
+    return this.httpClient.delete<any>(`${this.url}/deleteById/${answerId}`);
+  }
+
+  addAnswer(answer: Answer, questionId: number): Observable<any> {
+    return this.httpClient.post(`${this.url}/insertAnswer/${questionId}`, answer);
+  }
+
+  updateAnswer(answerId: number, oldAnswer: Answer) {
+    return this.httpClient.put(`${this.url}/updateAnswer/${answerId}`, oldAnswer);
   }
 }

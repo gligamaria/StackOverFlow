@@ -9,24 +9,14 @@
     <div class="container-fluid">
       <div class="row">
 
-        <div>
-          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
-          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
-          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
-          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
-          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
-          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
-          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
-          <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">Foarte foarte foarte mult text</button>
-
-        </div>
-
         <div *ngFor="let tempTag of tags">
 
-            <button routerLink="/questions" class="btn btn-outline-primary btn-padding-left-top">{{tempTag.title}}</button>
+            <button routerLink="/questions/tag/{{tempTag.title}}"
+                    class="btn btn-outline-primary btn-padding-left-top">{{tempTag.title}}</button>
 
         </div>
       </div>
+
     </div>
   </div>
 </div>

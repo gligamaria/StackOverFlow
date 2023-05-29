@@ -1,26 +1,53 @@
 <div class="main-content">
 
-    <form>
+    <form (ngSubmit)="onSubmit()">
       <div>
         <mat-form-field style="width: 500px">
           <mat-label>Question Title</mat-label>
-          <input matInput placeholder="Cum se va numi corgi-ul tau?">
+          <input matInput placeholder="Cum se va numi corgi-ul tau?" [(ngModel)]="titleInputValue" name="questionTitle">
         </mat-form-field>
       </div>
 
       <div>
         <mat-form-field style="width: 500px">
           <mat-label>Question Description</mat-label>
-          <textarea matInput></textarea>
+          <textarea matInput [(ngModel)]="descriptionInputValue" name="questionDescription"></textarea>
         </mat-form-field>
       </div>
+
+      <form>
+        <mat-form-field class="example-chip-list" style="width: 500px">
+          <mat-label>Selected Tags</mat-label>
+          <mat-chip-grid #chipGrid aria-label="Tag selection">
+            <mat-chip-row *ngFor="let tag of tags" (removed)="remove(tag)">
+              {{tag}}
+              <button matChipRemove [attr.aria-label]="'remove ' + tag">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          </mat-chip-grid>
+          <input placeholder="New Tag..." #tagInput [formControl]="tagCtrl"
+                 [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 (matChipInputTokenEnd)="add($event)"/>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+              {{tag}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+
+      <div>
+        <input type="file" class="file-input"
+               (change)="onFileSelected($event)">
+        <button type="submit" class="btn btn-primary" style="margin-bottom: 15px">{{buttonText}}</button>
+      </div>
+
+      <div *ngIf="fileUrl">
+        <a [href]="fileUrl" download>Download File</a>
+      </div>
+
     </form>
-
-    <app-tag-selection></app-tag-selection>
-
-  <input type="file" class="file-input"
-         (change)="onFileSelected($event)">
-
-  <a routerLink="/questions" class="btn btn-primary" style="margin-bottom: 15px">Ask question</a>
 
 </div>

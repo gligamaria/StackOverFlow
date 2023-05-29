@@ -14,13 +14,14 @@
 
             <div style="margin-left: 10px; display: flex; flex-direction: row; align-items: baseline; justify-content: start;">
               <h2>{{tempQuestion.title}}</h2>
-              <p style="margin-left: 10px">by {{tempQuestion.author}}</p>
+              <p *ngIf="tempQuestion.user.bannedStatus == 0"style="margin-left: 10px">by {{tempQuestion.user.name}}
+              (score: {{tempQuestion.user.userScore}})</p>
+              <p *ngIf="tempQuestion.user.bannedStatus != 0"style="margin-left: 10px">by <em class="italic-text">Banned User</em></p>
             </div>
 
             <div>
-              <button routerLink="/questions" class="btn btn-outline-primary">Corgi</button>
-              <button routerLink="/questions" class="btn btn-outline-primary btn-padding">Pez</button>
-              <button routerLink="/questions" class="btn btn-outline-primary btn-padding">Pret</button>
+              <button *ngFor="let tag of tempQuestion.questionTags" routerLink="/questions/tag/{{tag.title}}"
+                      class="btn btn-outline-primary" style="margin-right: 10px">{{tag.title}}</button>
             </div>
 
           </div>
@@ -32,19 +33,19 @@
 
 
         <td class="align-middle">
-          <div *ngIf="tempQuestion.author != 'Maria Gliga'" style="display: flex; flex-direction: column; align-items: center;">
-            <a class="vote-btn" href="#">
+          <div *ngIf="tempQuestion.user.name != (user?.name)" style="display: flex; flex-direction: column; align-items: center;">
+            <a class="vote-btn" (click)="addLike(tempQuestion.questionId)">
               <img alt="Like" src="assets/img/triangleUpBlack.png" width="20">
             </a>
-            <h3>73</h3>
-            <a class="vote-btn" href="#">
+            <h3>{{tempQuestion.score}}</h3>
+            <a class="vote-btn" (click)="addDislike(tempQuestion.questionId)">
               <img alt="Dislike" src="assets/img/triangleDownBlack.png" width="20">
             </a>
           </div>
-          <div *ngIf="tempQuestion.author == 'Maria Gliga'" style="display: flex; flex-direction: column; align-items: center;">
-            <button class="btn btn-outline-primary" style="width: 70px">Edit</button>
-            <button class="btn btn-outline-primary" style="width: 70px;margin-top: 5px;">Delete</button>
-          </div>
+<!--          <div *ngIf="tempQuestion.user.name == (user?.name)" style="display: flex; flex-direction: column; align-items: center;">-->
+<!--            <button class="btn btn-outline-primary" style="width: 70px">Edit</button>-->
+<!--            <button class="btn btn-outline-primary" style="width: 70px;margin-top: 5px;">Delete</button>-->
+<!--          </div>-->
         </td>
 
       </tr>

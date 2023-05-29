@@ -1,4 +1,5 @@
 export class Tag {
-  tagId: number;
-  title: String;
+  constructor(
+    public tagId: number,
+    public title: String){}
 }

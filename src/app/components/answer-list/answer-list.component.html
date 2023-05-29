@@ -11,26 +11,40 @@
           <div style="margin-left: 10px;">
 
             <div style="margin-left: 10px; display: flex; flex-direction: row; align-items: baseline; justify-content: start;">
-              <h3>{{tempAnswer.answerText}}</h3>
-              <p style="margin-left: 10px; font-size: 11px">by {{tempAnswer.author}} on {{tempAnswer.dateCreated}}</p>
+              <h3>{{tempAnswer.text}}</h3>
+              <p *ngIf="tempAnswer.user.bannedStatus == 0" style="margin-left: 10px">by {{tempAnswer.user.name}}
+              (score: {{tempAnswer.user.userScore}}) at {{tempAnswer.creationTime}}</p>
+              <p *ngIf="tempAnswer.user.bannedStatus != 0" style="margin-left: 10px">by <em class="italic-text">Banned User</em></p>
             </div>
+
+            <form (ngSubmit)="updateAnswer(tempAnswer)" *ngIf="tempAnswer.editing == true">
+              <mat-form-field style="width: 500px">
+                <mat-label>Add answer</mat-label>
+                <input matInput [(ngModel)]="answerText" name="answerText">
+              </mat-form-field>
+
+              <button type="submit" class="btn btn-primary" style="margin-bottom: 15px; margin-left: 15px;">Change answer</button>
+            </form>
 
           </div>
         </td>
 
         <td class="align-middle">
-          <div *ngIf="tempAnswer.author != 'Maria Gliga'" style="display: flex; flex-direction: column; align-items: center;">
-            <a class="vote-btn" href="#">
+
+          <div *ngIf="tempAnswer.user.name != (user?.name)" style="display: flex; flex-direction: column; align-items: center;">
+            <a class="vote-btn" (click)="addLike(tempAnswer.answerId)">
               <img alt="Like" src="assets/img/triangleUpBlack.png" width="20">
             </a>
-            <h4>73</h4>
-            <a class="vote-btn" href="#">
+            <h4>{{tempAnswer.score}}</h4>
+            <a class="vote-btn" (click)="addDislike(tempAnswer.answerId)">
               <img alt="Dislike" src="assets/img/triangleDownBlack.png" width="20">
             </a>
           </div>
-          <div *ngIf="tempAnswer.author == 'Maria Gliga'" style="display: flex; flex-direction: column; align-items: center;">
-            <button class="btn btn-outline-primary" style="width: 70px">Edit</button>
-            <button class="btn btn-outline-primary" style="width: 70px;margin-top: 5px;">Delete</button>
+          <div *ngIf="tempAnswer.user.name == (user?.name) || (user?.userType) == 0" style="display: flex; flex-direction: column; align-items: center;">
+            <button class="btn btn-outline-primary" style="width: 70px"
+            (click)="editAnswer(tempAnswer)">Edit</button>
+            <button class="btn btn-outline-primary" (click)="deleteAnswer(tempAnswer.answerId)"
+                    style="width: 70px;margin-top: 5px;">Delete</button>
           </div>
         </td>
 
@@ -39,5 +53,6 @@
       </tbody>
 
     </table>
+
   </div>
 </div>

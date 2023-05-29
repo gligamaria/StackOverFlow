@@ -1,14 +1,32 @@
+<!--<div class="login-container">-->
+<!--  <img src="assets/img/logo.png" alt="Login" class="login-image">-->
+<!--  <form (ngSubmit)="login(email,password)" class="login-form">-->
+<!--    <div class="form-group">-->
+<!--      <label for="email">Email:</label>-->
+<!--      <input type="text" id="email" name="email" [(ngModel)]="email" required>-->
+<!--    </div>-->
+<!--    <div class="form-group">-->
+<!--      <label for="password">Password:</label>-->
+<!--      <input type="password" id="password" name="password" [(ngModel)]="password" required>-->
+<!--    </div>-->
+<!--    <button routerLink="/questions" type="submit" class="btn btn-primary">Login</button>-->
+<!--  </form>-->
+<!--</div>-->
+
 <div class="login-container">
   <img src="assets/img/logo.png" alt="Login" class="login-image">
   <form (ngSubmit)="login()" class="login-form">
     <div class="form-group">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" [(ngModel)]="username" required>
+      <label for="email">Email:</label>
+      <input type="text" id="email" name="email" [(ngModel)]="email" required>
     </div>
     <div class="form-group">
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" [(ngModel)]="password" required>
     </div>
-    <button routerLink="/questions" type="submit" class="btn btn-primary">Login</button>
+    <button type="submit" class="btn btn-primary" [disabled]="isLoggingIn">Login</button>
+    <div *ngIf="isLoggingIn" class="loading-spinner"></div>
+    <div *ngIf="isBanned == true" style="background: coral;color: white;
+    display: flex; align-items: center; justify-content: center;"> You have been banned</div>
   </form>
 </div>

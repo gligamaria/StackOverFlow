@@ -21,7 +21,7 @@
             <a routerLink="/users" routerLinkActive="active-link">Users</a>
           </li>
           <li>
-            <a routerLink="/questions/user/Maria" routerLinkActive="active-link">My Questions</a>
+            <a routerLink="/questions/user/{{user.name}}" routerLinkActive="active-link">My Questions</a>
           </li>
         </ul>
       </nav>
@@ -44,9 +44,8 @@
             <app-search></app-search>
 
             <div class="cart-area d-n">
-              <a class="vote-btn" href="#">
-                <img alt="Account" src="assets/img/account.png" width="40">
-              </a>
+              <button class="au-btn-submit" style="padding-top: 10px; padding-bottom: 10px"
+              (click)="logOut()">Log Out</button>
             </div>
 
           </div>
@@ -58,8 +57,16 @@
     <!-- END HEADER DESKTOP-->
 
     <!-- MAIN CONTENT-->
-    <div>
+    <div *ngIf="authService.getAuthFromLocalStorage() == true || router.url == '/login'">
       <router-outlet></router-outlet>
+    </div>
+
+    <div class="main-content mat-typography" *ngIf="authService.getAuthFromLocalStorage() == false && router.url !== '/login'">
+      <div class="section-content section-content-p30">
+      <h1>You must be logged in to have access to the site.</h1>
+        <button class="au-btn-submit" style="padding-top: 10px; padding-bottom: 10px"
+                routerLink="/login">Log In</button>
+      </div>
     </div>
 
   </div>

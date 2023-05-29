@@ -1,44 +1,62 @@
 <div class="main-content">
   <div class="container-fluid">
 
-    <table style="width: 100%;">
-      <tr>
-        <td>
-          <h1>{{ question.title }}</h1>
-          <p>Posted by {{ question.author }} at {{ question.dateCreated }}.</p>
-        </td>
-        <td style="text-align: right;">
-          <div style="display: flex; flex-direction: column; align-items: center;">
-            <button *ngIf="question.author == 'Maria Gliga'" class="btn btn-outline-primary" style="width: 150px">Edit question</button>
-            <button *ngIf="question.author == 'Maria Gliga'" class="btn btn-outline-primary" style="width: 150px;margin-top: 5px;">Delete question</button>
-          </div>
-        </td>
-      </tr>
-    </table>
+    <div *ngIf="edit != true">
+      <table style="width: 100%;">
+        <tr>
+          <td>
 
-    <hr>
+            <h1>{{ question?.title }}</h1>
 
-    <div style="margin-top: 10px">
-      <button routerLink="/questions" class="btn btn-outline-primary">Corgi</button>
-      <button routerLink="/questions" class="btn btn-outline-primary btn-padding">Pez</button>
-      <button routerLink="/questions" class="btn btn-outline-primary btn-padding">Pret</button>
-    </div>
+            <p *ngIf="question?.user?.bannedStatus == 0"style="margin-left: 10px">by {{question?.user?.name}}
+              (score: {{question?.user?.userScore}}) at {{ question?.creationTime }}.</p>
+            <p *ngIf="question?.user?.bannedStatus != 0"style="margin-left: 10px">by <em class="italic-text">Banned User</em></p>
 
-    <p style="margin-top: 10px">{{ question.questionText }}</p>
+          </td>
+          <td style="text-align: right;">
+            <div style="display: flex; flex-direction: column; align-items: center">
+              <button *ngIf="question?.user?.name == (user?.name) || (user?.userType) == 0" class="btn btn-outline-primary"
+                      (click)="editQuestion()" style="width: 150px">Edit question</button>
+              <button *ngIf="question?.user?.name == (user?.name) || (user?.userType) == 0" routerLink="/questions" (click)="deleteQuestion()" class="btn btn-outline-primary"
+                      style="width: 150px;margin-top: 5px;">Delete question</button>
+              <button *ngIf="(user?.userType) == 0 && question?.user?.bannedStatus == 0 && question?.user?.userType != 0" routerLink="/questions" (click)="banUser(question.user)" class="btn btn-outline-primary"
+                      style="width: 150px;margin-top: 5px;">Ban user</button>
+              <button *ngIf="(user?.userType) == 0 && question?.user?.bannedStatus == 1 && question?.user?.userType != 0" routerLink="/questions" (click)="unbanUser(question.user)" class="btn btn-outline-primary"
+                      style="width: 150px;margin-top: 5px;">Unban user</button>
+            </div>
+          </td>
+        </tr>
+      </table>
 
+      <hr>
 
-    <form>
+      <div style="display: flex; flex-wrap: wrap;">
+        <button *ngFor="let tag of tags" routerLink="/questions/tag/{{tag.title}}" class="btn btn-outline-primary"
+                style="margin-top: 10px; margin-right:10px">{{tag.title}}</button>
+      </div>
+
+      <p style="margin-top: 10px">{{ question?.text }}</p>
+
+      <form (ngSubmit)="addAnswer()">
         <mat-form-field style="width: 500px">
           <mat-label>Add answer</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="answerText" name="answerText">
         </mat-form-field>
 
-      <button class="btn btn-primary" style="margin-bottom: 15px; margin-left: 15px;">Answer</button>
-    </form>
+        <button type="submit" class="btn btn-primary" style="margin-bottom: 15px; margin-left: 15px;">Answer</button>
+      </form>
 
-    <div>
-      <app-answer-list></app-answer-list>
+      <div>
+        <app-answer-list></app-answer-list>
+      </div>
+
     </div>
+
+    <div *ngIf="edit == true">
+      <app-new-question [titleInputValue]="question.title" [descriptionInputValue]="question.text"
+      [buttonText]="'Save changes'" [givenQuestion]="question" [updateQuestion]="true"></app-new-question>
+    </div>
+
 
   </div>
 </div>

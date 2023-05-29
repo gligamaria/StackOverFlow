@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
 import {Tag} from "../common/tag";
 
 @Injectable({
@@ -9,20 +8,23 @@ import {Tag} from "../common/tag";
 })
 export class TagService {
 
-  private url = 'http://localhost:8080/api/tags';
+  private url = 'http://localhost:8080/tags';
+  private urlGetAll = 'http://localhost:8080/tags/getAll';
+  private urlTitles = 'http://localhost:8080/tags/getTitles';
+
 
   constructor(private httpClient: HttpClient) { }
 
   getTagList(): Observable<Tag[]> {
-    return this.httpClient.get<GetResponse>(this.url).pipe(
-      map(response => response._embedded.tags)
-    );
+    return this.httpClient.get<Tag[]>(this.urlGetAll)
   }
-}
 
-interface GetResponse {
-  //unwrap the spring data REST
-  _embedded: {
-    tags: Tag[];
+  getTitles(): Observable<String[]> {
+    return this.httpClient.get<String[]>(this.urlTitles)
+  }
+
+  getTagListByQuestion(questionId: number): Observable<Tag[]> {
+    const questionUrl = `${this.url}/getByQuestionId/${questionId}`;
+    return this.httpClient.get<Tag[]>(questionUrl)
   }
 }

@@ -1,8 +1,12 @@
+import {User} from "./user";
+
 export class Answer {
-  answerId: number;
-  author: string;
-  title: string;
-  answerText: string;
-  picture: string;
-  dateCreated: Date;
+  public editing: boolean = false;
+  constructor(
+    public answerId: number,
+    public user: User,
+    public text: string,
+    public picture: string,
+    public score: number,
+    public creationTime: Date){}
 }
